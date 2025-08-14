@@ -234,6 +234,10 @@
     link.download = `bienvenida-${nombreInput.value || 'anonimo'}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
+	
+	// Enfoca el input sin desplazar la página abruptamente
+nombreInput.addEventListener('focus', () => {
+  window.scrollTo(0, 0);
 
   } catch (error) {
     console.error("Error:", error);
