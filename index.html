@@ -25,17 +25,59 @@
     background: rgba(255, 0, 102, 0.1);
   }
   #preview {
-    position: absolute;
-    top: 51.5%;
-    left: 50%;
-    width: 50%;
-    height: 50%;
-    object-fit: cover;
-    object-position: top;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-    border-radius: 50%;
+  position: absolute;
+  top: 51.5%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  object-fit: cover;       /* Mantiene la proporción y cubre el área */
+  object-position: top;    /* Alinea la foto desde la parte superior */
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  border-radius: 50%;
+	  
+/* Estilos para móviles (pantallas menores a 768px) */
+@media (max-width: 768px) {
+  .contenedor {
+    width: 100vw; /* Ocupa todo el ancho de la pantalla */
+    height: 80vh; /* Ajusta la altura */
+    max-width: 400px; /* Limita el tamaño máximo */
+    max-height: 400px;
   }
+
+  #nombre {
+    top: 60%; /* Posición más arriba (debajo del círculo) */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Más ancho */
+    font-size: 18px; /* Tamaño de fuente adecuado */
+  }
+
+  #texto-vivo {
+    top: 65%; /* Ajusta según necesidad */
+    font-size: 22px;
+  }
+
+  .botones {
+    flex-direction: column; /* Botones en columna */
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+    margin-top: 10px;
+  }
+
+  #subir-foto, #descargar {
+    width: 100%; /* Botones más anchos */
+    padding: 12px; /* Más grandes al tacto */
+    font-size: 18px;
+  }
+
+  #preview {
+    width: 50%; /* Reduce el círculo si es necesario */
+    height: 50%;
+  }
+}
+}
   .marco {
     position: absolute;
     width: 100%;
@@ -75,52 +117,14 @@
     display: flex;
     gap: 10px;
   }
-
-  /* Media queries - DEBEN ESTAR AL FINAL DEL CSS */
-  @media (max-width: 768px) {
-    .contenedor {
-      width: 95vw;
-      height: 95vw;
-      max-width: 400px;
-      max-height: 400px;
-    }
-
-    #nombre {
-      position: static; /* Cambiado a static para flujo normal */
-      transform: none;
-      left: auto;
-      width: 90%;
-      margin: 15px auto;
-      font-size: 18px;
-    }
-
-    #preview {
-      width: 60%;
-      height: 60%;
-    }
-
-    .botones {
-      flex-direction: column;
-      width: 90%;
-    }
-
-    #subir-foto, #descargar {
-      width: 100%;
-      padding: 15px;
-      font-size: 18px;
-    }
-  }
 </style>
 </head>
 <body>
 
-<!-- El resto de tu HTML permanece igual -->
-<div class="contenedor" id="drop-area">
-  <img src="" alt="Imagen" id="preview">
+<div class="contenedor" id="drop-area"><img src="" alt="Imagen" id="preview">
   <img src="Plantilla-bienvenidos.png" alt="Marco" class="marco">
+  <div id="texto-vivo"></div>
 </div>
-
-<!-- Movemos el input y botones FUERA del contenedor -->
 <input type="text" id="nombre" placeholder="Escribe tu nombre">
 <input type="file" id="file-input" accept="image/*" style="display: none;">
 
@@ -146,36 +150,33 @@
     textoVivo.textContent = nombreInput.value;
   });
 
-  // Reemplaza todo el código de "Subir foto" y "Drag & drop" por este:
-
-// 1. Subir foto (funciona en móvil y PC)
-botonSubir.addEventListener('click', () => fileInput.click());
-fileInput.addEventListener('change', (e) => {
+  // Subir foto (botón)
+  botonSubir.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
-        preview.src = URL.createObjectURL(file);
+      preview.src = URL.createObjectURL(file);
     }
-});
+  });
 
-// 2. Drag & drop (solo para PC - opcional)
-if (window.matchMedia("(min-width: 768px)").matches) {
-    dropArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropArea.classList.add('highlight');
-    });
+  // Drag & drop
+  dropArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropArea.classList.add('highlight');
+  });
 
-    dropArea.addEventListener('dragleave', () => {
-        dropArea.classList.remove('highlight');
-    });
+  dropArea.addEventListener('dragleave', () => {
+    dropArea.classList.remove('highlight');
+  });
 
-    dropArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropArea.classList.remove('highlight');
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
-            preview.src = URL.createObjectURL(file);
-        }
-    });
+  dropArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropArea.classList.remove('highlight');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      preview.src = URL.createObjectURL(file);
+    }
+  });
 
   // Descargar imagen
   botonDescargar.addEventListener('click', async () => {
