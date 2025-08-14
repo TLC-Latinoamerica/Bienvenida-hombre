@@ -35,6 +35,48 @@
   transform: translate(-50%, -50%);
   z-index: 0;
   border-radius: 50%;
+	  
+/* Estilos para móviles (pantallas menores a 768px) */
+@media (max-width: 768px) {
+  .contenedor {
+    width: 100vw; /* Ocupa todo el ancho de la pantalla */
+    height: 80vh; /* Ajusta la altura */
+    max-width: 400px; /* Limita el tamaño máximo */
+    max-height: 400px;
+  }
+
+  #nombre {
+    top: 60%; /* Posición más arriba (debajo del círculo) */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Más ancho */
+    font-size: 18px; /* Tamaño de fuente adecuado */
+  }
+
+  #texto-vivo {
+    top: 65%; /* Ajusta según necesidad */
+    font-size: 22px;
+  }
+
+  .botones {
+    flex-direction: column; /* Botones en columna */
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+    margin-top: 10px;
+  }
+
+  #subir-foto, #descargar {
+    width: 100%; /* Botones más anchos */
+    padding: 12px; /* Más grandes al tacto */
+    font-size: 18px;
+  }
+
+  #preview {
+    width: 50%; /* Reduce el círculo si es necesario */
+    height: 50%;
+  }
+}
 }
   .marco {
     position: absolute;
