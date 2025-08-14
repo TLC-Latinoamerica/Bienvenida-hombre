@@ -146,33 +146,36 @@
     textoVivo.textContent = nombreInput.value;
   });
 
-  // Subir foto (botón)
-  botonSubir.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', (e) => {
+  // Reemplaza todo el código de "Subir foto" y "Drag & drop" por este:
+
+// 1. Subir foto (funciona en móvil y PC)
+botonSubir.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
-      preview.src = URL.createObjectURL(file);
+        preview.src = URL.createObjectURL(file);
     }
-  });
+});
 
-  // Drag & drop
-  dropArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropArea.classList.add('highlight');
-  });
+// 2. Drag & drop (solo para PC - opcional)
+if (window.matchMedia("(min-width: 768px)").matches) {
+    dropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropArea.classList.add('highlight');
+    });
 
-  dropArea.addEventListener('dragleave', () => {
-    dropArea.classList.remove('highlight');
-  });
+    dropArea.addEventListener('dragleave', () => {
+        dropArea.classList.remove('highlight');
+    });
 
-  dropArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropArea.classList.remove('highlight');
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      preview.src = URL.createObjectURL(file);
-    }
-  });
+    dropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('highlight');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            preview.src = URL.createObjectURL(file);
+        }
+    });
 
   // Descargar imagen
   botonDescargar.addEventListener('click', async () => {
