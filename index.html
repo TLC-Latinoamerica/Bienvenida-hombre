@@ -189,7 +189,7 @@
     ctx.fillText(nombreInput.value || "", canvas.width / 2, canvas.height * 0.85);
 
     const link = document.createElement('a');
-    link.download = `bienvenida-${nombreInput.value || 'anonimo'}.png`;
+    link.download = `bienvenido-${nombreInput.value || 'anonimo'}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
 
